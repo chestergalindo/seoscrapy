@@ -1,11 +1,12 @@
 import scrapy
 import datetime
+# from variables import *
 
 
 class Item(scrapy.Spider):
     name = "seo"
     start_urls = [
-        'https://www.larepublica.co/'
+        'https://www.larepublica.co'
     ]
     custom_settings = {
         'FEED_URI': 'seo.json',
@@ -59,15 +60,14 @@ class Item(scrapy.Spider):
         numberimgwithaltempty = len(response.xpath('//img[@alt=""]').getall())
 
         totalimg = len(response.xpath('//img').getall())
-        percentajeemptyaltinimg = (numberimgwithaltempty/totalimg)*100
+        percentajeemptyaltinimg = int((numberimgwithaltempty/totalimg)*100)
 
-        # meta_google = response.xpath(
-        #     '//meta[contains(@property,"og")]').getall()
-        # meta_facebook = response.xpath(
-        #     '//meta[contains(@property,"fb")]').getall()
-        # meta_twitter = response.xpath(
-        #     '//meta[contains(@name,"twitter")]').getall()
-        # bottons = response.xpath('//button[not(@href)]/text()').getall()
+        meta_google = response.xpath(
+            '//meta[contains(@property,"og")]').getall()
+        meta_facebook = response.xpath(
+            '//meta[contains(@property,"fb")]').getall()
+        meta_twitter = response.xpath(
+            '//meta[contains(@name,"twitter")]').getall()
 
         yield {
             'date': today,
@@ -89,8 +89,7 @@ class Item(scrapy.Spider):
             'qtyimgwithaltempty': numberimgwithaltempty,
             'totalimg': totalimg,
             'percentajeemptyaltinimg': percentajeemptyaltinimg,
-            # 'google': meta_google,
-            # 'facebook': meta_facebook,
-            # 'twitter': meta_twitter,
-            # 'bottons_with_links': bottons
+            'google': meta_google,
+            'facebook': meta_facebook,
+            'twitter': meta_twitter,
         }
