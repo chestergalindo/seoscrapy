@@ -1,13 +1,14 @@
 import scrapy
 import datetime
-# from variables import *
 
 
 class Item(scrapy.Spider):
     name = "seo"
-    start_urls = [
-        'https://www.larepublica.co'
-    ]
+
+    def __init__(self, domain='', *args, **kwargs):
+        super(Item, self).__init__(*args, **kwargs)
+        self.start_urls = [domain]
+
     custom_settings = {
         'FEED_URI': 'seo.json',
         'FEED_FORMAT': 'json',
